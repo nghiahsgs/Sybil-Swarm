@@ -6,6 +6,7 @@
 
 import { motion } from "framer-motion";
 import { Download, FileText } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -96,11 +97,11 @@ export default function ReportView({ simulationId, isComplete }: Props) {
         />
       </div>
 
-      {/* Synthesis narrative */}
+      {/* Synthesis narrative — rendered markdown */}
       <div className="mb-6">
         <h3 className="mb-2 text-sm font-medium text-white/60">Analysis</h3>
-        <div className="whitespace-pre-wrap rounded-lg bg-white/5 p-4 text-sm leading-relaxed text-white/70">
-          {report.synthesis_narrative}
+        <div className="prose prose-sm prose-invert max-w-none rounded-lg bg-white/5 p-4 leading-relaxed">
+          <ReactMarkdown>{report.synthesis_narrative}</ReactMarkdown>
         </div>
       </div>
 
