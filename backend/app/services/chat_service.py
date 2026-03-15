@@ -3,13 +3,13 @@
 import logging
 from collections.abc import AsyncGenerator
 
-from litellm import acompletion
 from sqlmodel import Session, select
 
 from app.config import settings
 from app.database import engine
 from app.models.chat import ChatMessage
 from app.models.simulation import AgentResponse, Persona
+from app.services.llm_client import _get_client_for_model
 
 logger = logging.getLogger(__name__)
 
@@ -96,21 +96,6 @@ def save_message(simulation_id: int, persona_id: int, role: str, content: str):
         session.commit()
 
 
-def _get_provider_kwargs(model: str) -> dict:
-    """Return API key + base URL for the model's provider."""
-    model_lower = model.lower()
-    if model_lower.startswith(("claude", "anthropic")):
-        return {"api_key": settings.anthropic_api_key} if settings.anthropic_api_key else {}
-    if model_lower.startswith(("gemini", "google")):
-        return {"api_key": settings.google_api_key} if settings.google_api_key else {}
-    kwargs = {}
-    if settings.openai_api_key:
-        kwargs["api_key"] = settings.openai_api_key
-    if settings.openai_api_base:
-        kwargs["api_base"] = settings.openai_api_base
-    return kwargs
-
-
 async def stream_chat_response(
     simulation_id: int,
     persona_id: int,
@@ -128,17 +113,16 @@ async def stream_chat_response(
         {"role": "user", "content": user_message},
     ]
 
-    model = settings.expert_model
+    client, model = _get_client_for_model(settings.expert_model)
     full_response = ""
 
     try:
-        response = await acompletion(
+        response = await client.chat.completions.create(
             model=model,
             messages=messages,
             temperature=0.8,
             stream=True,
-            timeout=30,
-            **_get_provider_kwargs(model),
+            timeout=60,
         )
 
         async for chunk in response:

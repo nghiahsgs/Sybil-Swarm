@@ -49,7 +49,14 @@ def test_create_simulation_validation():
     s2 = SimulationCreate(
         product_input="test",
         total_agents=20,
-        target_audience={"age_range": "18-35", "gender": "any", "interests": "tech", "occupation": "", "income_level": "", "location": ""},
+        target_audience={
+            "age_range": "18-35",
+            "gender": "any",
+            "interests": "tech",
+            "occupation": "",
+            "income_level": "",
+            "location": "",
+        },
     )
     assert s2.target_audience is not None
     assert s2.target_audience.age_range == "18-35"
