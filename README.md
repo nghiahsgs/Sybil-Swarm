@@ -37,7 +37,19 @@ In minutes, you get:
 
 ---
 
-## 🎮 Live Demo
+## 🎬 Demo
+
+<div align="center">
+
+[![Sybil Swarm Demo](https://img.youtube.com/vi/kUqR5mokjSs/maxresdefault.jpg)](https://youtu.be/kUqR5mokjSs)
+
+**[▶ Watch Full Demo on YouTube](https://youtu.be/kUqR5mokjSs)**
+
+</div>
+
+---
+
+## 🎮 Features
 
 <div align="center">
 
