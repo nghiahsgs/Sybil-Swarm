@@ -56,7 +56,7 @@ async def llm_call(
         "model": model,
         "messages": messages,
         "temperature": temperature,
-        "timeout": 60,
+        "timeout": 120,
         **_get_provider_kwargs(model),
     }
     if json_mode:
