@@ -12,18 +12,18 @@ interface Props {
   totalAgents: number;
 }
 
-const PHASE_LABELS: Record<string, string> = {
-  connecting: "Connecting...",
-  parsing_input: "Analyzing product...",
-  generating_personas: "Creating 1,000 synthetic customers...",
-  simulating: "Swarm evaluation in progress...",
-  aggregating: "Synthesizing market report...",
-  completed: "Simulation complete!",
-};
-
 export default function PhaseIndicator({ phase, completedCount, totalAgents }: Props) {
   const progress = phase === "completed" ? 100 : (completedCount / totalAgents) * 100;
-  const label = PHASE_LABELS[phase] || phase;
+
+  const labels: Record<string, string> = {
+    connecting: "Connecting...",
+    parsing_input: "Analyzing product...",
+    generating_personas: `Creating ${totalAgents.toLocaleString()} synthetic customers...`,
+    simulating: "Swarm evaluation in progress...",
+    aggregating: "Synthesizing market report...",
+    completed: "Simulation complete!",
+  };
+  const label = labels[phase] || phase;
 
   return (
     <div className="rounded-xl border border-white/10 bg-black/40 p-4 backdrop-blur-sm">
