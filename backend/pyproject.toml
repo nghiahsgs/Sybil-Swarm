@@ -1,0 +1,40 @@
+[project]
+name = "sybil-swarm"
+version = "0.1.0"
+description = "Swarm intelligence engine for product/startup validation"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "litellm>=1.55.0",
+    "sqlmodel>=0.0.22",
+    "pydantic-settings>=2.7.0",
+    "httpx>=0.28.0",
+    "beautifulsoup4>=4.12.0",
+    "tenacity>=9.0.0",
+    "sse-starlette>=2.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.8.0",
+    "httpx",
+]
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
